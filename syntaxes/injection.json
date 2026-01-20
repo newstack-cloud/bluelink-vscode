@@ -1,0 +1,21 @@
+{
+  "scopeName": "blueprint-sub.injection",
+  "injectionSelector": "L:source.blueprint.yaml (string.unquoted.block.yaml, string.quoted.double.yaml, string.quoted.single.yaml), L:source.blueprint.json.comments (string.quoted.double.json.comments), L:source.blueprint.json (string.quoted.double.json)",
+  "patterns": [
+    {
+      "include": "#substitution"
+    }
+  ],
+  "repository": {
+    "substitution": {
+      "begin": "\\${",
+      "end": "}",
+      "name": "meta.embedded.inline.blueprintsub",
+      "patterns": [
+        {
+          "include": "source.blueprintsub"
+        }
+      ]
+    }
+  }
+}

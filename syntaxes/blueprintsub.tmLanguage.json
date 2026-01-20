@@ -1,0 +1,404 @@
+{
+  "name": "Blueprint Substitutions",
+  "scopeName": "source.blueprintsub",
+  "patterns": [
+    {
+      "include": "#substitution"
+    }
+  ],
+  "repository": {
+    "substitution": {
+      "patterns": [
+        {
+          "include": "#function-call"
+        },
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#variable-reference"
+        },
+        {
+          "include": "#value-reference"
+        },
+        {
+          "include": "#datasource-reference"
+        },
+        {
+          "include": "#child-reference"
+        },
+        {
+          "include": "#elem-reference"
+        },
+        {
+          "include": "#elem-index-reference"
+        },
+        {
+          "include": "#resource-reference"
+        }
+      ]
+    },
+    "function-call": {
+      "patterns": [
+        {
+          "begin": "\\s*([A-Za-z][A-Za-z0-9_-]*)(\\()",
+          "beginCaptures": {
+            "1": { "name": "entity.name.function.blueprintsub" },
+            "2": {
+              "name": "punctuation.definition.arguments.begin.blueprintsub"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.arguments.end.blueprintsub" }
+          },
+          "patterns": [
+            {
+              "include": "#function-arguments"
+            }
+          ]
+        },
+        {
+          "match": "\\s*([A-Za-z][A-Za-z0-9_-]*)(\\()(\\))",
+          "captures": {
+            "1": { "name": "entity.name.function.blueprintsub" },
+            "2": {
+              "name": "punctuation.definition.arguments.begin.blueprintsub"
+            },
+            "3": { "name": "punctuation.definition.arguments.end.blueprintsub" }
+          }
+        }
+      ]
+    },
+    "punctuation-comma": {
+      "name": "punctuation.separator.comma.blueprintsub",
+      "match": ","
+    },
+    "function-arguments": {
+      "patterns": [
+        {
+          "include": "#substitution"
+        },
+        {
+          "include": "#punctuation-comma"
+        }
+      ]
+    },
+    "variable-reference": {
+      "begin": "variables",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "0": {
+          "name": "support.constant.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#dot-accessor"
+        },
+        {
+          "include": "#string-literal-accessor"
+        }
+      ]
+    },
+    "datasource-reference": {
+      "begin": "datasources",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "0": {
+          "name": "support.constant.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#datasource-accessor-path-dot-start"
+        },
+        {
+          "include": "#datasource-accessor-path-brackets-start"
+        }
+      ]
+    },
+    "value-reference": {
+      "begin": "values",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "0": {
+          "name": "support.constant.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#accessor-path-dot-start"
+        },
+        {
+          "include": "#accessor-path-brackets-start"
+        }
+      ]
+    },
+    "resource-reference": {
+      "begin": "(?!datasources|variables|children)((resources)|([a-zA-Z][A-Za-z0-9_-]+))",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "2": {
+          "name": "support.constant.blueprintsub"
+        },
+        "3": {
+            "name": "variable.other.read.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#accessor-path-dot-start"
+        },
+        {
+          "include": "#accessor-path-brackets-start"
+        }
+      ]
+    },
+    "elem-reference": {
+      "begin": "(elem)",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "1": {
+          "name": "support.constant.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#accessor-path-dot-start"
+        },
+        {
+          "include": "#accessor-path-brackets-start"
+        }
+      ]
+    },
+    "elem-index-reference": {
+      "match": "i",
+      "name": "support.constant.blueprintsub"
+    },
+    "child-reference": {
+      "begin": "children",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "0": {
+          "name": "support.constant.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#accessor-path-dot-start"
+        },
+        {
+          "include": "#accessor-path-brackets-start"
+        }
+      ]
+    },
+    "accessor-path-dot-start": {
+      "begin": "(?=\\.)",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "patterns": [
+        {
+          "include": "#dot-accessor"
+        },
+        {
+          "include": "#index-accessor"
+        },
+        {
+          "include": "#string-literal-accessor"
+        }
+      ]
+    },
+    "accessor-path-brackets-start": {
+      "begin": "(?=\\[)",
+      "end": "(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+)",
+      "patterns": [
+        {
+          "include": "#dot-accessor"
+        },
+        {
+          "include": "#index-accessor"
+        },
+        {
+          "include": "#string-literal-accessor"
+        }
+      ]
+    },
+    "index-accessor": {
+      "match": "(\\[)(\\d*)(\\])",
+      "captures": {
+        "1": {
+          "name": "meta.brace.squares.blueprintsub"
+        },
+        "2": {
+          "name": "constant.numeric.blueprintsub"
+        },
+        "3": {
+          "name": "meta.brace.squares.blueprintsub"
+        }
+      }
+    },
+    "datasource-accessor-path-dot-start": {
+      "begin": "(?=\\.)",
+      "end": "(((\\[)(\\d*)(\\]))|(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+))",
+      "endCaptures": {
+        "3": {
+          "name": "meta.brace.squares.blueprintsub"
+        },
+        "4": {
+          "name": "constant.numeric.blueprintsub"
+        },
+        "5": {
+          "name": "meta.brace.squares.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#dot-accessor"
+        },
+        {
+          "include": "#string-literal-accessor"
+        }
+      ]
+    },
+    "datasource-accessor-path-brackets-start": {
+      "begin": "(?=\\[)",
+      "end": "(((\\[)(\\d*)(\\]))|(?!\\.|\"|\\[|\\]|[A-Za-z0-9_-]+))",
+      "endCaptures": {
+        "3": {
+          "name": "meta.brace.squares.blueprintsub"
+        },
+        "4": {
+          "name": "constant.numeric.blueprintsub"
+        },
+        "5": {
+          "name": "meta.brace.squares.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#string-literal-accessor"
+        },
+        {
+          "include": "#dot-accessor"
+        }
+      ]
+    },
+    "dot-accessor": {
+      "begin": "\\.",
+      "end": "(?![A-Za-z0-9_-]+)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.accessor.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#dot-accessor-name"
+        },
+        {
+          "include": "#illegal-dot-accessor-name"
+        }
+      ]
+    },
+    "string-literal-accessor": {
+      "begin": "\\[",
+      "end": "\\]",
+      "beginCaptures": {
+        "0": {
+          "name": "meta.brace.squares.blueprintsub"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "meta.brace.squares.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#string-literal-accessor-name"
+        }
+      ]
+    },
+    "string-literal-accessor-name": {
+      "name": "string.quoted.double.blueprintsub",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.blueprintsub"
+        }
+      },
+      "end": "(\")|((?:[^\\\\\\n])$)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.string.end.blueprintsub"
+        },
+        "2": {
+          "name": "invalid.illegal.newline.blueprintsub"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#string-literal-prop-accessor-name"
+        },
+        {
+          "include": "#illegal-string-literal-prop-accessor-name"
+        }
+      ]
+    },
+    "string-literal-prop-accessor-name": {
+      "name": "variable.other.property.blueprintsub",
+      "match": "[A-Za-z][A-Za-z0-9_-]*(?=\")"
+    },
+    "illegal-string-literal-prop-accessor-name": {
+      "name": "invalid.illegal.property.blueprintsub",
+      "match": ".+(?=\")"
+    },
+    "dot-accessor-name": {
+      "name": "variable.other.property.blueprintsub",
+      "match": "[A-Za-z][A-Za-z0-9_-]*"
+    },
+    "illegal-dot-accessor-name": {
+      "name": "invalid.illegal.property.blueprintsub",
+      "match": "[A-Za-z0-9_-]+"
+    },
+    "literal": {
+      "patterns": [
+        {
+          "include": "#string-literal"
+        },
+        {
+          "include": "#bool-literal"
+        },
+        {
+          "include": "#numeric-literal"
+        }
+      ]
+    },
+    "string-literal": {
+      "name": "string.quoted.double.blueprintsub",
+      "begin": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.blueprintsub"
+        }
+      },
+      "end": "(\")|((?:[^\\\\\\n])$)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.string.end.blueprintsub"
+        },
+        "2": {
+          "name": "invalid.illegal.newline.blueprintsub"
+        }
+      }
+    },
+    "bool-literal": {
+      "name": "constant.language.blueprintsub",
+      "match": "(true|false)"
+    },
+    "numeric-literal": {
+      "name": "constant.numeric.blueprintsub",
+      "match": "-?(\\d+)(\\.(\\d+))?"
+    }
+  }
+}

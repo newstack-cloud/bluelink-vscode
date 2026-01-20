@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bluelinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#bluelinkGradient)"/>
+  <!-- Chain link symbol representing "link" -->
+  <g fill="none" stroke="white" stroke-width="6" stroke-linecap="round">
+    <!-- First link -->
+    <path d="M35 40 L35 60 A10 10 0 0 0 45 70 L55 70"/>
+    <!-- Second link -->
+    <path d="M65 60 L65 40 A10 10 0 0 0 55 30 L45 30"/>
+    <!-- Connecting line -->
+    <line x1="45" y1="45" x2="55" y2="55" stroke-width="5"/>
+  </g>
+</svg>

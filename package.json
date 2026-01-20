@@ -1,0 +1,207 @@
+{
+  "name": "bluelink",
+  "displayName": "Bluelink",
+  "description": "Official VSCode extension for Bluelink - Infrastructure as Code framework",
+  "version": "0.1.0",
+  "publisher": "bluelink",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:blueprint",
+    "onLanguage:blueprint-json",
+    "onLanguage:blueprint-jsonc",
+    "workspaceContains:**/*.blueprint.yaml",
+    "workspaceContains:**/*.blueprint.yml",
+    "workspaceContains:**/*.blueprint.json",
+    "workspaceContains:**/*.blueprint.jsonc",
+    "onCommand:bluelink.languageServer.restart"
+  ],
+  "keywords": [
+    "bluelink",
+    "blueprint",
+    "infrastructure-as-code",
+    "iac",
+    "yaml",
+    "jsonc",
+    "json",
+    "deploy",
+    "cloud"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "blueprint",
+        "aliases": [
+          "Blueprint",
+          "blueprint"
+        ],
+        "extensions": [
+          ".blueprint.yaml",
+          ".blueprint.yml"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./resources/icons/bluelink.svg",
+          "dark": "./resources/icons/bluelink.svg"
+        }
+      },
+      {
+        "id": "blueprint-jsonc",
+        "aliases": [
+          "Blueprint JSON with Comments",
+          "blueprint json with comments",
+          "blueprint jsonc",
+          "Blueprint Human JSON",
+          "blueprint human json",
+          "blueprint hujson"
+        ],
+        "extensions": [
+          ".blueprint.jsonc",
+          ".blueprint.hujson"
+        ],
+        "configuration": "./language-configuration-jsonc.json",
+        "icon": {
+          "light": "./resources/icons/bluelink.svg",
+          "dark": "./resources/icons/bluelink.svg"
+        }
+      },
+      {
+        "id": "blueprint-json",
+        "aliases": [
+          "Blueprint JSON",
+          "blueprint json"
+        ],
+        "extensions": [
+          ".blueprint.json"
+        ],
+        "configuration": "./language-configuration-jsonc.json",
+        "icon": {
+          "light": "./resources/icons/bluelink.svg",
+          "dark": "./resources/icons/bluelink.svg"
+        }
+      },
+      {
+        "id": "blueprintsub",
+        "configuration": "./language-configuration-blueprintsub.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "blueprint",
+        "scopeName": "source.blueprint.yaml",
+        "path": "./syntaxes/blueprint.tmLanguage.json"
+      },
+      {
+        "language": "blueprint-jsonc",
+        "scopeName": "source.blueprint.json.comments",
+        "path": "./syntaxes/blueprint.jsonc.tmLanguage.json"
+      },
+      {
+        "language": "blueprint-json",
+        "scopeName": "source.blueprint.json",
+        "path": "./syntaxes/blueprint.json.tmLanguage.json"
+      },
+      {
+        "language": "blueprintsub",
+        "scopeName": "source.blueprintsub",
+        "path": "./syntaxes/blueprintsub.tmLanguage.json"
+      },
+      {
+        "path": "./syntaxes/injection.json",
+        "scopeName": "blueprint-sub.injection",
+        "injectTo": [
+          "source.blueprint.yaml",
+          "source.blueprint.json.comments",
+          "source.blueprint.json"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.inline.blueprintsub": "blueprintsub"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "bluelink.languageServer.restart",
+        "title": "Restart Language Server",
+        "category": "Bluelink"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Bluelink",
+      "properties": {
+        "bluelink.languageServer.path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Blueprint language server binary. Leave empty to use PATH (looks for 'blueprint-language-server' or 'blueprint-ls')."
+        },
+        "bluelink.languageServer.trace": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between VS Code and the Blueprint language server."
+        },
+        "bluelink.languageServer.maxProblems": {
+          "scope": "resource",
+          "type": "number",
+          "default": 100,
+          "description": "Controls the maximum number of problems produced by the server."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "[blueprint]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.autoIndent": "keep"
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "yarn run check-types && yarn run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && yarn run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.90.0",
+    "@types/which": "^3.0.3",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.21.4",
+    "eslint": "^8.57.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1",
+    "which": "^4.0.0"
+  }
+}
