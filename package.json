@@ -32,6 +32,16 @@
     "deploy",
     "cloud"
   ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/newstack-cloud/bluelink-vscode.git"
+  },
+  "homepage": "https://github.com/newstack-cloud/bluelink-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/newstack-cloud/bluelink-vscode/issues"
+  },
+  "icon": "resources/icons/bluelink.png",
   "main": "./dist/extension.js",
   "contributes": {
     "languages": [
@@ -156,6 +166,26 @@
           "type": "number",
           "default": 100,
           "description": "Controls the maximum number of problems produced by the server."
+        },
+        "bluelink.plugins.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable loading of provider and transformer plugins for rich LSP features (completions, hover, diagnostics for plugin-provided resource types)."
+        },
+        "bluelink.plugins.pluginPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to plugin directories (colon-separated on Unix, semicolon on Windows). Falls back to BLUELINK_DEPLOY_ENGINE_PLUGIN_PATH environment variable if empty."
+        },
+        "bluelink.plugins.logFileRootDir": {
+          "type": "string",
+          "default": "",
+          "description": "Directory for plugin log files. Falls back to BLUELINK_DEPLOY_ENGINE_PLUGIN_LOG_FILE_ROOT_DIR environment variable, then $HOME/.bluelink/engine/plugins/logs."
+        },
+        "bluelink.diagnostics.showAnyTypeWarnings": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show warnings when substitutions resolve to the \"any\" type. Disable to reduce noise in blueprints with many runtime-resolved values or functions that produce multiple return types."
         }
       }
     },
@@ -169,6 +199,26 @@
           "strings": true
         },
         "editor.autoIndent": "keep"
+      },
+      "[blueprint-jsonc]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.autoIndent": "full"
+      },
+      "[blueprint-json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.autoIndent": "full"
       }
     }
   },
@@ -188,13 +238,14 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
+    "@types/node": "22.x",
     "@types/vscode": "^1.90.0",
     "@types/which": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
+    "@vscode/vsce": "^3.7.1",
     "esbuild": "^0.21.4",
     "eslint": "^8.57.0",
     "npm-run-all": "^4.1.5",

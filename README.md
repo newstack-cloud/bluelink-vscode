@@ -16,7 +16,7 @@ Search for "Bluelink" in the VS Code Extensions view (`Ctrl+Shift+X` / `Cmd+Shif
 
 ### From VSIX
 
-1. Download the `.vsix` file from the [releases page](https://github.com/bluelink/bluelink-vscode/releases)
+1. Download the `.vsix` file from the [releases page](https://github.com/newstack-cloud/bluelink-vscode/releases)
 2. Run `code --install-extension bluelink-x.x.x.vsix`
 
 ## Requirements
@@ -81,4 +81,4 @@ yarn compile
 
 ## License
 
-MIT
+This project is licensed under the [Apache License 2.0](LICENSE).

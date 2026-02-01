@@ -425,9 +425,26 @@
 					"include": "#flow-scalar-plain-in-implicit-type"
 				},
 				{
+					"comment": "Unquoted string starting with substitution",
+					"begin": "(?=\\${)",
+					"end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                            | \\s* : [\\[\\]{},]\n                            | \\s* [\\[\\]{},]\n                        )\n                    ",
+					"name": "string.unquoted.plain.in.yaml",
+					"patterns": [
+						{
+							"include": "#blueprint-substitution"
+						}
+					]
+				},
+				{
+					"comment": "Regular unquoted string (may contain substitutions)",
 					"begin": "(?x)\n                          [^\\s[-?:,\\[\\]{}#&*!|>'\"%@`]]\n                        | [?:-] [^\\s[\\[\\]{},]]\n                    ",
 					"end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                            | \\s* : [\\[\\]{},]\n                            | \\s* [\\[\\]{},]\n                        )\n                    ",
-					"name": "string.unquoted.plain.in.yaml"
+					"name": "string.unquoted.plain.in.yaml",
+					"patterns": [
+						{
+							"include": "#blueprint-substitution"
+						}
+					]
 				}
 			]
 		},
@@ -467,9 +484,26 @@
 					"include": "#flow-scalar-plain-out-implicit-type"
 				},
 				{
+					"comment": "Unquoted string starting with substitution",
+					"begin": "(?=\\${)",
+					"end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                        )\n                    ",
+					"name": "string.unquoted.plain.out.yaml",
+					"patterns": [
+						{
+							"include": "#blueprint-substitution"
+						}
+					]
+				},
+				{
+					"comment": "Regular unquoted string (may contain substitutions)",
 					"begin": "(?x)\n                          [^\\s[-?:,\\[\\]{}#&*!|>'\"%@`]]\n                        | [?:-] \\S\n                    ",
 					"end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                        )\n                    ",
-					"name": "string.unquoted.plain.out.yaml"
+					"name": "string.unquoted.plain.out.yaml",
+					"patterns": [
+						{
+							"include": "#blueprint-substitution"
+						}
+					]
 				}
 			]
 		},
@@ -614,6 +648,16 @@
 				},
 				{
 					"include": "#property"
+				}
+			]
+		},
+		"blueprint-substitution": {
+			"begin": "\\${",
+			"end": "}",
+			"name": "meta.embedded.inline.blueprintsub",
+			"patterns": [
+				{
+					"include": "source.blueprintsub"
 				}
 			]
 		}

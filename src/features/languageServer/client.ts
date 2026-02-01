@@ -72,6 +72,16 @@ export class BlueprintLanguageClient {
       ],
       diagnosticCollectionName: 'bluelink',
       outputChannel: this.outputChannel,
+      initializationOptions: {
+        plugins: {
+          enabled: this.config.pluginsEnabled,
+          pluginPath: this.config.pluginsPath || undefined,
+          logFileRootDir: this.config.pluginsLogFileRootDir || undefined,
+        },
+        diagnostics: {
+          showAnyTypeWarnings: this.config.showAnyTypeWarnings,
+        },
+      },
     };
 
     this.client = new LanguageClient(

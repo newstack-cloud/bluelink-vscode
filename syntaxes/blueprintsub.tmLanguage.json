@@ -321,13 +321,13 @@
     },
     "string-literal-accessor-name": {
       "name": "string.quoted.double.blueprintsub",
-      "begin": "\"",
+      "begin": "\\\\?\"",
       "beginCaptures": {
         "0": {
           "name": "punctuation.definition.string.begin.blueprintsub"
         }
       },
-      "end": "(\")|((?:[^\\\\\\n])$)",
+      "end": "(\\\\?\")|((?:[^\\\\\\n])$)",
       "endCaptures": {
         "1": {
           "name": "punctuation.definition.string.end.blueprintsub"
@@ -347,11 +347,11 @@
     },
     "string-literal-prop-accessor-name": {
       "name": "variable.other.property.blueprintsub",
-      "match": "[A-Za-z][A-Za-z0-9_-]*(?=\")"
+      "match": "[A-Za-z0-9_.-]+(?=\\\\?\")"
     },
     "illegal-string-literal-prop-accessor-name": {
       "name": "invalid.illegal.property.blueprintsub",
-      "match": ".+(?=\")"
+      "match": ".+(?=\\\\?\")"
     },
     "dot-accessor-name": {
       "name": "variable.other.property.blueprintsub",

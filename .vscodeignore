@@ -14,3 +14,6 @@ esbuild.js
 **/*.md
 !README.md
 !CHANGELOG.md
+.github/**
+release-please-config.json
+.release-please-manifest.json
