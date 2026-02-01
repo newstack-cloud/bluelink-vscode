@@ -3,7 +3,7 @@
   "displayName": "Bluelink",
   "description": "Official VSCode extension for Bluelink - Infrastructure as Code framework",
   "version": "0.1.1",
-  "publisher": "bluelink",
+  "publisher": "newstack",
   "engines": {
     "vscode": "^1.90.0"
   },
