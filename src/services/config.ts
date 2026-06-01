@@ -35,6 +35,14 @@ export class ConfigService {
     return this.config.get<boolean>('diagnostics.showAnyTypeWarnings', true);
   }
 
+  get blueprintsTransformSpec(): boolean {
+    return this.config.get<boolean>('blueprints.transformSpec', false);
+  }
+
+  get blueprintsValidateAfterTransform(): boolean {
+    return this.config.get<boolean>('blueprints.validateAfterTransform', false);
+  }
+
   onDidChange(callback: () => void): vscode.Disposable {
     return vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration(CONFIG_SECTION)) {

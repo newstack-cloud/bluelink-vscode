@@ -69,6 +69,7 @@ export class BlueprintLanguageClient {
         { scheme: 'file', language: 'blueprint' },
         { scheme: 'file', language: 'blueprint-jsonc' },
         { scheme: 'file', language: 'blueprint-json' },
+        { scheme: 'file', language: 'blueprintlang' },
       ],
       diagnosticCollectionName: 'bluelink',
       outputChannel: this.outputChannel,
@@ -80,6 +81,10 @@ export class BlueprintLanguageClient {
         },
         diagnostics: {
           showAnyTypeWarnings: this.config.showAnyTypeWarnings,
+        },
+        blueprints: {
+          transformSpec: this.config.blueprintsTransformSpec,
+          validateAfterTransform: this.config.blueprintsValidateAfterTransform,
         },
       },
     };

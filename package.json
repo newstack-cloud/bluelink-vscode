@@ -15,10 +15,13 @@
     "onLanguage:blueprint",
     "onLanguage:blueprint-json",
     "onLanguage:blueprint-jsonc",
+    "onLanguage:blueprintlang",
     "workspaceContains:**/*.blueprint.yaml",
     "workspaceContains:**/*.blueprint.yml",
     "workspaceContains:**/*.blueprint.json",
     "workspaceContains:**/*.blueprint.jsonc",
+    "workspaceContains:**/*.bp",
+    "workspaceContains:**/*.blueprint",
     "onCommand:bluelink.languageServer.restart"
   ],
   "keywords": [
@@ -97,6 +100,22 @@
         }
       },
       {
+        "id": "blueprintlang",
+        "aliases": [
+          "Blueprint Language",
+          "blueprintlang"
+        ],
+        "extensions": [
+          ".bp",
+          ".blueprint"
+        ],
+        "configuration": "./language-configuration-blueprintlang.json",
+        "icon": {
+          "light": "./resources/icons/bluelink.svg",
+          "dark": "./resources/icons/bluelink.svg"
+        }
+      },
+      {
         "id": "blueprintsub",
         "configuration": "./language-configuration-blueprintsub.json"
       }
@@ -116,6 +135,11 @@
         "language": "blueprint-json",
         "scopeName": "source.blueprint.json",
         "path": "./syntaxes/blueprint.json.tmLanguage.json"
+      },
+      {
+        "language": "blueprintlang",
+        "scopeName": "source.blueprintlang",
+        "path": "./syntaxes/blueprintlang.tmLanguage.json"
       },
       {
         "language": "blueprintsub",
@@ -186,6 +210,16 @@
           "type": "boolean",
           "default": true,
           "description": "Show warnings when substitutions resolve to the \"any\" type. Disable to reduce noise in blueprints with many runtime-resolved values or functions that produce multiple return types."
+        },
+        "bluelink.blueprints.transformSpec": {
+          "type": "boolean",
+          "default": false,
+          "description": "Run transformer plugins during blueprint validation. Requires transformer plugins that handle the validation context. Reload the window after changing."
+        },
+        "bluelink.blueprints.validateAfterTransform": {
+          "type": "boolean",
+          "default": false,
+          "description": "Validate resources against the transformed blueprint shape. No effect unless 'bluelink.blueprints.transformSpec' is also enabled. Reload the window after changing."
         }
       }
     },
@@ -211,6 +245,16 @@
         "editor.autoIndent": "full"
       },
       "[blueprint-json]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        },
+        "editor.autoIndent": "full"
+      },
+      "[blueprintlang]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
         "editor.quickSuggestions": {
