@@ -4,7 +4,7 @@ Official VS Code extension for [Bluelink](https://bluelink.dev) — an Infrastru
 
 ## Features
 
-- **Syntax highlighting** for Blueprint files (`.blueprint.yaml`, `.blueprint.yml`, `.blueprint.json`, `.blueprint.jsonc`, `.blueprint`, `.bp`)
+- **Syntax highlighting** for Blueprint files (`.blueprint.yaml`, `.blueprint.yml`, `.blueprint.json`, `.blueprint.jsonc`, `.bp`, `.blueprint`)
 - **Language Server integration** for diagnostics, completions, and more
 - **IntelliSense** support within Blueprint substitution strings (`${...}`)
 
