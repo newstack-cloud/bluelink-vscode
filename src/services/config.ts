@@ -36,11 +36,19 @@ export class ConfigService {
   }
 
   get blueprintsTransformSpec(): boolean {
-    return this.config.get<boolean>('blueprints.transformSpec', false);
+    return this.config.get<boolean>('blueprints.transformSpec', true);
   }
 
   get blueprintsValidateAfterTransform(): boolean {
     return this.config.get<boolean>('blueprints.validateAfterTransform', false);
+  }
+
+  get blueprintsDeployConfigFile(): string {
+    return this.config.get<string>('blueprints.deployConfigFile', '');
+  }
+
+  get blueprintsDeployConfigFileNames(): string[] {
+    return this.config.get<string[]>('blueprints.deployConfigFileNames', []);
   }
 
   onDidChange(callback: () => void): vscode.Disposable {

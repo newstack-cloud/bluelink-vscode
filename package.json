@@ -213,8 +213,21 @@
         },
         "bluelink.blueprints.transformSpec": {
           "type": "boolean",
-          "default": false,
-          "description": "Run transformer plugins during blueprint validation. Requires transformer plugins that handle the validation context. Reload the window after changing."
+          "default": true,
+          "description": "Run transformer plugins during blueprint validation, so that editor diagnostics match those reported on the command line. Transformers only run for blueprints with a deploy configuration, since they need a deploy target to expand abstract resources for. Reload the window after changing."
+        },
+        "bluelink.blueprints.deployConfigFile": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the deploy configuration file to use for every blueprint. Use this to select a per-environment file such as 'bluelink.deploy.dev.jsonc'. A relative path is resolved against each project directory, searching upwards from the blueprint; an absolute path is used as given. Leave empty to search for the conventional file names. Reload the window after changing."
+        },
+        "bluelink.blueprints.deployConfigFileNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "File names to search for when locating deploy configuration, in order of preference, relative to each project directory. Set this for projects that keep deploy configuration under names of their own. Leave empty to use the conventions: 'bluelink.deploy.jsonc', then Celerity's 'app.deploy.jsonc' and '.celerity/deploy-config.json'. Ignored when 'bluelink.blueprints.deployConfigFile' is set. Reload the window after changing."
         },
         "bluelink.blueprints.validateAfterTransform": {
           "type": "boolean",

@@ -10,6 +10,40 @@ import { Logger } from '../../services/logger';
 
 const LANGUAGE_SERVER_BINARIES = ['blueprint-language-server', 'blueprint-ls'];
 
+// Deploy configuration file names the server searches for by default: the
+// conventional Bluelink file, then Celerity's authoring file and the file
+// Celerity generates from it.
+const DEFAULT_DEPLOY_CONFIG_PATHS = [
+  'bluelink.deploy.jsonc',
+  'bluelink.deploy.json',
+  'app.deploy.jsonc',
+  'app.deploy.json',
+  '.celerity/deploy-config.json',
+];
+
+/**
+ * Builds the watch patterns for deploy configuration.
+ *
+ * A change to deploy configuration can alter diagnostics for every open
+ * blueprint, so the server is notified and revalidates. The patterns follow
+ * whatever the server will actually search for, so a project using its own
+ * names or a per-environment file is watched too.
+ */
+function deployConfigGlobs(config: ConfigService): string[] {
+  const configured = [
+    ...config.blueprintsDeployConfigFileNames,
+    config.blueprintsDeployConfigFile,
+  ].filter((path) => path.length > 0);
+
+  const paths = configured.length > 0 ? configured : DEFAULT_DEPLOY_CONFIG_PATHS;
+
+  return paths.map((path) =>
+    // An absolute path is watched as given; a relative one may sit at any level,
+    // matching the server's upward search.
+    path.startsWith('/') ? path : `**/${path}`
+  );
+}
+
 /**
  * Resolves the language server binary path.
  * Priority:
@@ -85,7 +119,20 @@ export class BlueprintLanguageClient {
         blueprints: {
           transformSpec: this.config.blueprintsTransformSpec,
           validateAfterTransform: this.config.blueprintsValidateAfterTransform,
+          deployConfigFile: this.config.blueprintsDeployConfigFile || undefined,
+          deployConfigFileNames:
+            this.config.blueprintsDeployConfigFileNames.length > 0
+              ? this.config.blueprintsDeployConfigFileNames
+              : undefined,
         },
+      },
+      // Deploy configuration selects the deploy target transformer plugins
+      // emit for, so the server needs to know when it changes. Watching it
+      // here keeps the server free of any workspace layout assumptions.
+      synchronize: {
+        fileEvents: deployConfigGlobs(this.config).map((glob) =>
+          vscode.workspace.createFileSystemWatcher(glob)
+        ),
       },
     };
 
