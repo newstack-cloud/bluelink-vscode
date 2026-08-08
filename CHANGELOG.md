@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/newstack-cloud/bluelink-vscode/compare/bluelink-v0.1.3...bluelink-v0.1.4) (2026-08-08)
+
+
+### Features
+
+* add support for deploy configuration and enable spec transformation by default ([d4ee948](https://github.com/newstack-cloud/bluelink-vscode/commit/d4ee9486b752e49a903a8895d2af53320c76b6df))
+
 ## [0.1.3](https://github.com/newstack-cloud/bluelink-vscode/compare/bluelink-v0.1.2...bluelink-v0.1.3) (2026-06-01)
 
 
