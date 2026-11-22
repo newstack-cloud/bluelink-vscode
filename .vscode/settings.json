@@ -9,8 +9,5 @@
         "dist": true // set this to false to include "dist" folder in search results
     },
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off",
-    "yaml.schemas": {
-        "https://json.schemastore.org/mocharc.json": "file:///Users/andresutherland/projects2024/celerity-sandbox-vscode-extension/blueprint-language-server/example.blueprint.yaml"
-    }
+    "typescript.tsc.autoDetect": "off"
 }
