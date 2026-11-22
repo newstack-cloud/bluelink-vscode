@@ -31,7 +31,7 @@ yarn compile
 | `yarn package` | Production build (type check + lint + minified bundle) |
 | `yarn lint` | Run ESLint |
 | `yarn check-types` | Run TypeScript type checking only |
-| `yarn test` | Run tests |
+| `yarn test` | Run `vscode-test` (there are no tests yet) |
 
 ## Project Structure
 
@@ -56,9 +56,9 @@ resources/icons/            # Extension icons
 
 This project uses [release-please](https://github.com/googleapis/release-please) to automate releases. Use [conventional commits](https://www.conventionalcommits.org/) when committing changes:
 
-- `feat: ...` — new feature (bumps minor/patch version)
+- `feat: ...` — new feature (bumps the patch version while pre-1.0, the minor after)
 - `fix: ...` — bug fix (bumps patch version)
 - `chore: ...` — maintenance (no version bump)
 - `feat!: ...` or `BREAKING CHANGE:` — breaking change (bumps minor version while pre-1.0)
 
-When conventional commits are merged to `main`, release-please automatically creates a Release PR that bumps the version and updates the changelog. Merging the Release PR triggers publishing to the VS Code Marketplace.
+When conventional commits are merged to `main`, release-please automatically creates a Release PR that bumps the version and updates the changelog. Merging the Release PR triggers publishing to the VS Code Marketplace, and to Open VSX when the `OVSX_PAT` repository secret is set; without it the release completes without an Open VSX publish.
